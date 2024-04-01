@@ -2,11 +2,19 @@
 Utility functions for training and validating models.
 """
 import time
+
 import torch
 import torch.nn as nn
+from peft import get_peft_model, LoraConfig, TaskType
 from tqdm import tqdm
+from transformers import BertModel, BertConfig, BertTokenizer
+
 from mfae.utils import correct_predictions
-from bert_serving.client import BertClient
+
+# TODO
+"""
+    This may causes GPU out memory problem
+"""
 
 
 def train(model,
@@ -34,7 +42,9 @@ def train(model,
     """
     # Switch the model to train mode.
     model.train()
-    device = model.device
+    # device = model.device
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     epoch_start = time.time()
     batch_time_avg = 0.0
@@ -43,7 +53,24 @@ def train(model,
     total_num = 0
     sub_len = 0
 
-    bc = BertClient()
+    # bc = BertClient(ip='0.0.0.0')
+    # config = BertConfig(hidden_size=1024, num_attention_heads=16, max_position_embeddings=2048)
+    config = BertConfig.from_pretrained('bert-large-cased')
+    tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
+    bert_model = BertModel(config).from_pretrained('bert-large-cased')
+
+    peft_config = LoraConfig(task_type=TaskType.SEQ_2_SEQ_LM, inference_mode=False, r=8, lora_alpha=32,
+                             lora_dropout=0.1)
+
+    model.to(device)
+    bert_model.to(device)
+    bert_model = get_peft_model(bert_model, peft_config)
+
+    if torch.cuda.device_count() > 1:
+        print("Using", torch.cuda.device_count(), "GPUs!")
+        model = nn.DataParallel(model)
+        bert_model = nn.DataParallel(bert_model)
+
     batch = dataloader
     tqdm_batch_iterator = tqdm(range(len(dataloader['labels'])))
     for batch_index in tqdm_batch_iterator:
@@ -51,8 +78,12 @@ def train(model,
 
         # try:
         # Move input and output data to the GPU if it is used.
-        premises = torch.tensor(bc.encode(batch["premises"][batch_index])).to(device)
-        hypotheses = torch.tensor(bc.encode(batch["hypotheses"][batch_index])).to(device)
+        premises_inputs = tokenizer(batch['premises'][batch_index], return_tensors='pt', padding=True,
+                                    truncation=True).to(device)
+        hypothesis_inputs = tokenizer(batch['hypotheses'][batch_index], return_tensors='pt', padding=True,
+                                      truncation=True).to(device)
+        premises = bert_model(**premises_inputs)[0].to(device)
+        hypotheses = bert_model(**hypothesis_inputs)[0].to(device)
         labels = torch.tensor(batch["labels"][batch_index]).to(device)
 
         optimizer.zero_grad()
@@ -69,16 +100,16 @@ def train(model,
         correct_preds += correct_predictions(probs, labels)
         total_num += len(labels)
 
-        description = "Avg. batch proc. time: {:.4f}s, loss: {:.4f}"\
-                      .format(batch_time_avg/(batch_index+1),
-                              running_loss/(batch_index+1))
+        description = "Avg. batch proc. time: {:.4f}s, loss: {:.4f}" \
+            .format(batch_time_avg / (batch_index + 1),
+                    running_loss / (batch_index + 1))
         tqdm_batch_iterator.set_description(description)
         # except:
         #     sub_len += 1
         #     print('encoding error!')
 
     epoch_time = time.time() - epoch_start
-    epoch_loss = running_loss / (len(dataloader['labels']) -sub_len)
+    epoch_loss = running_loss / (len(dataloader['labels']) - sub_len)
     epoch_accuracy = correct_preds / total_num
 
     return epoch_time, epoch_loss, epoch_accuracy
@@ -105,23 +136,46 @@ def validate(model, dataloader, criterion):
 
     # Switch to evaluate mode.
     model.eval()
-    device = model.device
+    # device = model.device
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     epoch_start = time.time()
     running_loss = 0.0
     running_accuracy = 0.0
     total_num = 0
     sub_len = 0
+    # config = BertConfig(hidden_size=1024, num_attention_heads=16, max_position_embeddings=2048)
+    config = BertConfig.from_pretrained('bert-large-cased')
+    tokenizer = BertTokenizer.from_pretrained('bert-base-cased')
+    bert_model = BertModel(config).from_pretrained('bert-large-cased')
 
-    bc = BertClient()
+    peft_config = LoraConfig(task_type=TaskType.SEQ_2_SEQ_LM, inference_mode=False, r=8, lora_alpha=32,
+                             lora_dropout=0.1)
+
+    model.to(device)
+    bert_model.to(device)
+    bert_model = get_peft_model(bert_model, peft_config)
+
+    if torch.cuda.device_count() > 1:
+        print("Using", torch.cuda.device_count(), "GPUs!")
+        model = nn.DataParallel(model)
+        bert_model = nn.DataParallel(bert_model)
+
     batch = dataloader
     # Deactivate autograd for evaluation.
     with torch.no_grad():
-        for batch_index in range(len(dataloader['labels'])):
+        for batch_index in tqdm(range(len(dataloader['labels']))):
             # Move input and output data to the GPU if one is used.
             # try:
-            premises = torch.tensor(bc.encode(batch["premises"][batch_index])).to(device)
-            hypotheses = torch.tensor(bc.encode(batch["hypotheses"][batch_index])).to(device)
+            premises_inputs = tokenizer(batch['premises'][batch_index], return_tensors='pt',
+                                        padding='max_length',
+                                        truncation=True).to(device)
+            hypothesis_inputs = tokenizer(batch['hypotheses'][batch_index], return_tensors='pt',
+                                          padding='max_length',
+                                          truncation=True).to(device)
+            # device = torch.device('cpu')
+            premises = bert_model(**premises_inputs)[0].to(device)
+            hypotheses = bert_model(**hypothesis_inputs)[0].to(device)
             labels = torch.tensor(batch["labels"][batch_index]).to(device)
 
             logits, probs = model(premises, hypotheses)

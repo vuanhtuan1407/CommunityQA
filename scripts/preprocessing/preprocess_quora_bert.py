@@ -52,16 +52,16 @@ def preprocess_quora_data(inputdir,
         os.makedirs(targetdir)
 
     # Retrieve the train, dev and test data files from the dataset directory.
-    train_file = ""
-    dev_file = ""
-    test_file = ""
-    for file in os.listdir(inputdir):
-        if fnmatch.fnmatch(file, "train.tsv"):
-            train_file = file
-        elif fnmatch.fnmatch(file, "dev.tsv"):
-            dev_file = file
-        elif fnmatch.fnmatch(file, "test.tsv"):
-            test_file = file
+    train_file = "train.tsv"
+    dev_file = "dev.tsv"
+    test_file = "test.tsv"
+    # for file in os.listdir(inputdir):
+    #     if fnmatch.fnmatch(file, "train.tsv"):
+    #         train_file = file
+    #     elif fnmatch.fnmatch(file, "dev.tsv"):
+    #         dev_file = file
+    #     elif fnmatch.fnmatch(file, "test.tsv"):
+    #         test_file = file
 
     # -------------------- Train data preprocessing -------------------- #
     preprocessor = Preprocessor(lowercase=lowercase,
@@ -74,6 +74,7 @@ def preprocess_quora_data(inputdir,
 
     print(20*"=", " Preprocessing train set ", 20*"=")
     print("\t* Reading data...")
+    # print(os.path.join(inputdir, train_file))
     data = preprocessor.read_data_quora_bert(os.path.join(inputdir, train_file)) #read_data_quora
     with open(os.path.join(targetdir, "bert_train_data.pkl"), "wb") as pkl_file:
         pickle.dump(data, pkl_file)

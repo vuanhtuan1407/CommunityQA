@@ -5,9 +5,9 @@ Definition of custom layers for the ESIM model.
 import numpy as np
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
-from torch.nn.modules.activation import MultiheadAttention
+
 from .utils import sort_by_seq_lens, masked_softmax, weighted_sum, normal_softmax
+
 
 # Class widely inspired from:
 # https://github.com/allenai/allennlp/blob/master/allennlp/modules/input_variational_dropout.py
@@ -94,7 +94,7 @@ class LinerEncoder(nn.Module):
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.dropout = dropout
-        self._encoder = nn.Linear(input_size, hidden_size*2)
+        self._encoder = nn.Linear(input_size, hidden_size * 2)
 
     def forward(self, sequences_batch, sequences_lengths):
         """
@@ -109,7 +109,7 @@ class LinerEncoder(nn.Module):
             reordered_outputs: The outputs (hidden states) of the encoder for
                 the sequences in the input batch, in the same order.
         """
-        sorted_batch, sorted_lengths, _, restoration_idx =\
+        sorted_batch, sorted_lengths, _, restoration_idx = \
             sort_by_seq_lens(sequences_batch, sequences_lengths)
         packed_batch = nn.utils.rnn.pack_padded_sequence(sorted_batch,
                                                          sorted_lengths,
@@ -123,10 +123,11 @@ class LinerEncoder(nn.Module):
 
         return reordered_outputs
 
+
 class LengthEncoder(nn.Module):
 
     def forward(self, sequences_batch, sequences_lengths):
-        sorted_batch, sorted_lengths, _, restoration_idx =\
+        sorted_batch, sorted_lengths, _, restoration_idx = \
             sort_by_seq_lens(sequences_batch, sequences_lengths)
         packed_batch = nn.utils.rnn.pack_padded_sequence(sorted_batch,
                                                          sorted_lengths,
@@ -136,6 +137,7 @@ class LengthEncoder(nn.Module):
         reordered_outputs = outputs.index_select(0, restoration_idx)
 
         return reordered_outputs
+
 
 class Seq2SeqEncoder(nn.Module):
     """
@@ -176,7 +178,7 @@ class Seq2SeqEncoder(nn.Module):
             bidirectional: If True, the encoder of the module is bidirectional.
                 Defaults to False.
         """
-        assert issubclass(rnn_type, nn.RNNBase),\
+        assert issubclass(rnn_type, nn.RNNBase), \
             "rnn_type must be a class inheriting from torch.nn.RNNBase"
 
         super(Seq2SeqEncoder, self).__init__()
@@ -210,12 +212,11 @@ class Seq2SeqEncoder(nn.Module):
             reordered_outputs: The outputs (hidden states) of the encoder for
                 the sequences in the input batch, in the same order.
         """
-        sorted_batch, sorted_lengths, _, restoration_idx =\
+        sorted_batch, sorted_lengths, _, restoration_idx = \
             sort_by_seq_lens(sequences_batch, sequences_lengths)
         packed_batch = nn.utils.rnn.pack_padded_sequence(sorted_batch,
-                                                         sorted_lengths,
+                                                         sorted_lengths.cpu(),
                                                          batch_first=True)
-
         outputs, _ = self._encoder(packed_batch, None)
 
         outputs, _ = nn.utils.rnn.pad_packed_sequence(outputs,
@@ -238,10 +239,11 @@ class SoftmaxAttention(nn.Module):
         self.liner6 = nn.Sequential(nn.Linear(hidden_size * 2, hidden_size // 2))
         self.liner7 = nn.Sequential(nn.Linear(hidden_size * 2, hidden_size // 2))
         self.liner8 = nn.Sequential(nn.Linear(hidden_size * 2, hidden_size // 2))
-        self.liner = nn.Sequential(nn.Linear(hidden_size * 4, hidden_size * 4), nn.ReLU(), RNNDropout(p=dropout)) # ,RNNDropout(p=dropout)
+        self.liner = nn.Sequential(nn.Linear(hidden_size * 4, hidden_size * 4), nn.ReLU(),
+                                   RNNDropout(p=dropout))  # ,RNNDropout(p=dropout)
 
         # self._enhance = nn.Sequential(nn.Linear(2*7*2*hidden_size, 7*2*hidden_size), nn.ReLU(), RNNDropout(p=dropout))
-        self._projection = nn.Sequential(nn.Linear(7*2*hidden_size, hidden_size), nn.ReLU(), RNNDropout(p=dropout))
+        self._projection = nn.Sequential(nn.Linear(7 * 2 * hidden_size, hidden_size), nn.ReLU(), RNNDropout(p=dropout))
 
         # self.Wb_inter = torch.nn.Parameter(torch.randn(hidden_size*2, hidden_size*2), requires_grad=True)
         # self.Wb_intra = torch.nn.Parameter(torch.randn(hidden_size * 2, hidden_size * 2), requires_grad=True)
@@ -283,7 +285,7 @@ class SoftmaxAttention(nn.Module):
         """
         # dot attn
         enhanced_premises0, enhanced_hypotheses0 = self.dot_attn(premise_batch, premise_mask,
-                hypothesis_batch, hypothesis_mask)
+                                                                 hypothesis_batch, hypothesis_mask)
         # # bilinear attn
         # enhanced_premises1, enhanced_hypotheses1 = self.bilinear_attn(premise_batch, premise_mask,
         #         hypothesis_batch, hypothesis_mask)
@@ -329,7 +331,7 @@ class SoftmaxAttention(nn.Module):
     #     return enhanced_premises, enhanced_hypotheses
 
     def dot_attn(self, premise_batch, premise_mask,
-                hypothesis_batch, hypothesis_mask):
+                 hypothesis_batch, hypothesis_mask):
         sqrt_dim = np.sqrt(premise_batch.size()[2])
         # inter-attention Softmax attention weights.
         similarity_matrix = premise_batch.bmm(hypothesis_batch.transpose(2, 1).contiguous()) / sqrt_dim
@@ -354,16 +356,18 @@ class SoftmaxAttention(nn.Module):
         inter_premise_importance = torch.sum(hyp_prem_attn, dim=-2).unsqueeze(-1)
 
         enhanced_premises, enhanced_hypotheses = self.multi_importance(premise_importance, hypotheses_importance,
-                                                            inter_premise_importance, inter_hypotheses_importance,
-                                                            premise_batch, hypothesis_batch, attended_premises,
-                                                            attended_hypotheses, self_premises, self_hypotheses)
+                                                                       inter_premise_importance,
+                                                                       inter_hypotheses_importance,
+                                                                       premise_batch, hypothesis_batch,
+                                                                       attended_premises,
+                                                                       attended_hypotheses, self_premises,
+                                                                       self_hypotheses)
 
         return enhanced_premises, enhanced_hypotheses
 
-
     def multi_importance(self, premise_importance, hypotheses_importance,
                          inter_premise_importance, inter_hypotheses_importance,
-                         premise_batch, hypothesis_batch,attended_premises,
+                         premise_batch, hypothesis_batch, attended_premises,
                          attended_hypotheses, self_premises, self_hypotheses):
         # attn1
         prem_all_attn1 = premise_importance * inter_premise_importance

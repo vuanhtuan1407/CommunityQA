@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e43fa89c-751f-4bef-9699-368c206fd8cb" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dataset/multinli_1.0.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dataset/quora/dev.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dataset/quora/readme.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dataset/quora/test.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dataset/quora/train.tsv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/dataset/quora/wordvec.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/embeddings/glove.840B.300d.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/preprocessed/quora/bert_dev_data.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/preprocessed/quora/bert_test_data.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/preprocessed/quora/bert_train_data.pkl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/AMAE.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AMAE.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bert_quora.py" beforeDir="false" afterPath="$PROJECT_DIR$/bert_quora.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/training/quora_training_bert.json" beforeDir="false" afterPath="$PROJECT_DIR$/config/training/quora_training_bert.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mfae/layers_new.py" beforeDir="false" afterPath="$PROJECT_DIR$/mfae/layers_new.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mfae/model_bert.py" beforeDir="false" afterPath="$PROJECT_DIR$/mfae/model_bert.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/preprocessing/preprocess_quora_bert.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/preprocessing/preprocess_quora_bert.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils_bert.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils_bert.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Dockerfile" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2XypxJPqQt6BYvCwGD70WC5g9pE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.bert_quora.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Tuan/SoICT/20231/project-3/code/MFAE",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Tuan\SoICT\20231\project-3\code\MFAE\data\predict" />
+      <recent name="D:\Tuan\SoICT\20231\project-3\code\MFAE\data\dataset" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.bert_quora">
+    <configuration name="bert_quora" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AMAE" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/bert_quora.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="preprocess_quora_bert" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="AMAE" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/scripts/preprocessing" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scripts/preprocessing/preprocess_quora_bert.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="python bert_quora.py &gt;&gt; log/quora/quora_bert.log" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="AMAE" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="bert_quora.py" />
+      <option name="PARAMETERS" value="&gt;&gt; log/quora/quora_bert.log" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="python process_quora_bert.py" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="AMAE" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="process_quora_bert.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.bert_quora" />
+        <item itemvalue="Python.python bert_quora.py &gt;&gt; log/quora/quora_bert.log" />
+        <item itemvalue="Python.preprocess_quora_bert" />
+        <item itemvalue="Python.python process_quora_bert.py" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-d68999036c7f-b11f5e8da5ad-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.14475.56" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e43fa89c-751f-4bef-9699-368c206fd8cb" name="Changes" comment="" />
+      <created>1699611419566</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1699611419566</updated>
+      <workItem from="1699611420560" duration="1919000" />
+      <workItem from="1701698573186" duration="1340000" />
+      <workItem from="1701700270407" duration="559000" />
+      <workItem from="1701703115538" duration="1322000" />
+      <workItem from="1701704581298" duration="2686000" />
+      <workItem from="1701707294656" duration="6548000" />
+      <workItem from="1701714022914" duration="15000" />
+      <workItem from="1701714049756" duration="2540000" />
+      <workItem from="1701716739431" duration="646000" />
+      <workItem from="1701718803364" duration="22000" />
+      <workItem from="1701742949914" duration="4602000" />
+      <workItem from="1701770402630" duration="41000" />
+      <workItem from="1701791015770" duration="1633000" />
+      <workItem from="1701826075759" duration="882000" />
+      <workItem from="1701885137693" duration="128000" />
+      <workItem from="1701885376092" duration="411000" />
+      <workItem from="1701885803734" duration="138000" />
+      <workItem from="1701886158341" duration="12000" />
+      <workItem from="1702374405998" duration="682000" />
+      <workItem from="1702392710329" duration="3655000" />
+      <workItem from="1702436921997" duration="31000" />
+      <workItem from="1702442781097" duration="429000" />
+      <workItem from="1702634914031" duration="2385000" />
+      <workItem from="1702656696924" duration="924000" />
+      <workItem from="1702710478729" duration="24000" />
+      <workItem from="1702714503343" duration="1864000" />
+      <workItem from="1702804720803" duration="4202000" />
+      <workItem from="1702809209901" duration="278000" />
+      <workItem from="1702810127144" duration="777000" />
+      <workItem from="1702815853893" duration="594000" />
+      <workItem from="1702866201064" duration="1215000" />
+      <workItem from="1702883715498" duration="1000" />
+      <workItem from="1702886103430" duration="374000" />
+      <workItem from="1702910251540" duration="72000" />
+      <workItem from="1702980073726" duration="254000" />
+      <workItem from="1702980607321" duration="1307000" />
+      <workItem from="1703034647923" duration="3306000" />
+      <workItem from="1703038084933" duration="3669000" />
+      <workItem from="1703056962062" duration="630000" />
+      <workItem from="1703209106202" duration="2765000" />
+      <workItem from="1703261538725" duration="411000" />
+      <workItem from="1703418325531" duration="69000" />
+      <workItem from="1703836918548" duration="44000" />
+      <workItem from="1704133680994" duration="906000" />
+      <workItem from="1704136688395" duration="23000" />
+      <workItem from="1704187967777" duration="11000" />
+      <workItem from="1704189139899" duration="602000" />
+      <workItem from="1704251541832" duration="70000" />
+      <workItem from="1704252503344" duration="7000" />
+      <workItem from="1704507146251" duration="1363000" />
+      <workItem from="1704701954021" duration="1092000" />
+      <workItem from="1704791998313" duration="948000" />
+      <workItem from="1705740535333" duration="35000" />
+      <workItem from="1706349031339" duration="4092000" />
+      <workItem from="1706857803596" duration="131000" />
+      <workItem from="1711988396692" duration="683000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="python:google-cloud-storage" />
+    <option featureType="dependencySupport" implementationName="executable:docker" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/mfae/data.py</url>
+          <line>5</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/MFAE$preprocess_quora_bert.coverage" NAME="preprocess_quora_bert Coverage Results" MODIFIED="1701708316682" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts/preprocessing" />
+    <SUITE FILE_PATH="coverage/MFAE$fetch_data.coverage" NAME="fetch_data Coverage Results" MODIFIED="1699612900839" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/scripts" />
+    <SUITE FILE_PATH="coverage/MFAE$python_process_quora_bert_py.coverage" NAME="python process_quora_bert.py Coverage Results" MODIFIED="1701698745392" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MFAE$bert_quora.coverage" NAME="bert_quora Coverage Results" MODIFIED="1704133932707" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/MFAE$python_bert_quora_py____log_quora_quora_bert_log.coverage" NAME="python bert_quora.py &gt;&gt; log/quora/quora_bert.log Coverage Results" MODIFIED="1701711244840" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>

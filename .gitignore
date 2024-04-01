@@ -102,3 +102,9 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# pretrained_bert folder
+pretrained_bert/
+
+# data
+data/dataset/

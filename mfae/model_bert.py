@@ -5,8 +5,10 @@ Definition of the ESIM model.
 
 import torch
 import torch.nn as nn
-from .layers_new import RNNDropout, Seq2SeqEncoder, SoftmaxAttention, LengthEncoder
+
+from .layers_new import RNNDropout, Seq2SeqEncoder, SoftmaxAttention
 from .utils import replace_masked
+
 
 class ESIM(nn.Module):
     """
@@ -63,13 +65,12 @@ class ESIM(nn.Module):
                                            bidirectional=True)
 
         self._classification = nn.Sequential(nn.Dropout(p=self.dropout),
-                                             nn.Linear(2*4*self.hidden_size,
+                                             nn.Linear(2 * 4 * self.hidden_size,
                                                        self.hidden_size),
                                              nn.Tanh(),
                                              nn.Dropout(p=self.dropout),
                                              nn.Linear(self.hidden_size,
                                                        self.num_classes))
-
 
         # Initialize all weights and biases in the model.
         # self.apply(_init_esim_weights)
@@ -108,10 +109,10 @@ class ESIM(nn.Module):
         v_ai = self._composition(projected_premises, premises_lengths)
         v_bj = self._composition(projected_hypotheses, hypotheses_lengths)
 
-        v_a_avg = torch.sum(v_ai * premises_mask.unsqueeze(1).transpose(2, 1), dim=1)\
-            / torch.sum(premises_mask, dim=1, keepdim=True)
-        v_b_avg = torch.sum(v_bj * hypotheses_mask.unsqueeze(1).transpose(2, 1), dim=1)\
-            / torch.sum(hypotheses_mask, dim=1, keepdim=True)
+        v_a_avg = torch.sum(v_ai * premises_mask.unsqueeze(1).transpose(2, 1), dim=1) \
+                  / torch.sum(premises_mask, dim=1, keepdim=True)
+        v_b_avg = torch.sum(v_bj * hypotheses_mask.unsqueeze(1).transpose(2, 1), dim=1) \
+                  / torch.sum(hypotheses_mask, dim=1, keepdim=True)
 
         v_a_max, _ = replace_masked(v_ai, premises_mask, -1e7).max(dim=1)
         v_b_max, _ = replace_masked(v_bj, hypotheses_mask, -1e7).max(dim=1)
@@ -138,11 +139,11 @@ def _init_esim_weights(module):
         nn.init.constant_(module.bias_ih_l0.data, 0.0)
         nn.init.constant_(module.bias_hh_l0.data, 0.0)
         hidden_size = module.bias_hh_l0.data.shape[0] // 4
-        module.bias_hh_l0.data[hidden_size:(2*hidden_size)] = 1.0
+        module.bias_hh_l0.data[hidden_size:(2 * hidden_size)] = 1.0
 
         if (module.bidirectional):
             nn.init.xavier_uniform_(module.weight_ih_l0_reverse.data)
             nn.init.orthogonal_(module.weight_hh_l0_reverse.data)
             nn.init.constant_(module.bias_ih_l0_reverse.data, 0.0)
             nn.init.constant_(module.bias_hh_l0_reverse.data, 0.0)
-            module.bias_hh_l0_reverse.data[hidden_size:(2*hidden_size)] = 1.0
+            module.bias_hh_l0_reverse.data[hidden_size:(2 * hidden_size)] = 1.0

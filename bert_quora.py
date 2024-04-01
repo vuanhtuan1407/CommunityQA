@@ -3,19 +3,22 @@ Train the ESIM model on the preprocessed SNLI dataset.
 """
 # Aurelien Coet, 2018.
 
-from utils_bert import train, validate
-from mfae.model_bert import ESIM
-# from mfae.model_bert_transformer import ESIM
-import torch.nn as nn
-import matplotlib.pyplot as plt
-import os
-import sys
 import argparse
 import json
-import numpy as np
+import os
 import pickle
-import torch
+import sys
+
 import matplotlib
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+# from mfae.model_bert_transformer import ESIM
+import torch.nn as nn
+
+from mfae.model_bert import ESIM
+from utils_bert import train, validate
+
 matplotlib.use('Agg')
 
 
@@ -125,9 +128,11 @@ def main(train_file,
     epochs_count = []
     train_losses = []
     valid_losses = []
+    print("\t* Building model...DONE")
 
     # Continuing training from a checkpoint if one was given as argument.
     if checkpoint:
+        print('checkpoint')
         checkpoint = torch.load(checkpoint)
         start_epoch = checkpoint["epoch"] + 1
         best_score = checkpoint["best_score"]
@@ -141,27 +146,27 @@ def main(train_file,
         train_losses = checkpoint["train_losses"]
         valid_losses = checkpoint["valid_losses"]
 
-    # Compute loss and accuracy before starting (or resuming) training.
-    _, valid_loss, valid_accuracy = validate(model,
-                                             valid_dataloader,
-                                             criterion)
-    print("\t* Validation loss before training: {:.4f}, accuracy: {:.4f}%"
-          .format(valid_loss, (valid_accuracy*100)))
-
-    _, test_loss, test_accuracy = validate(model,
-                                             test_dataloader,
-                                             criterion)
-    print("\t* test loss before training: {:.4f}, accuracy: {:.4f}%"
-          .format(test_loss, (test_accuracy*100)))
+    # # Compute loss and accuracy before starting (or resuming) training.
+    # _, valid_loss, valid_accuracy = validate(model,
+    #                                          valid_dataloader,
+    #                                          criterion)
+    # print("\t* Validation loss before training: {:.4f}, accuracy: {:.4f}%"
+    #       .format(valid_loss, (valid_accuracy * 100)))
+    #
+    # _, test_loss, test_accuracy = validate(model,
+    #                                        test_dataloader,
+    #                                        criterion)
+    # print("\t* test loss before training: {:.4f}, accuracy: {:.4f}%"
+    #       .format(test_loss, (test_accuracy * 100)))
 
     # -------------------- Training epochs ------------------- #
     print("\n",
           20 * "=",
           "Training ESIM model on device: {}".format(device),
           20 * "=")
-
+    print('start epochs')
     patience_counter = 0
-    for epoch in range(start_epoch, epochs+1):
+    for epoch in range(start_epoch, epochs + 1):
         train_dataloader = transform_batch_data(train_data, batch_size=batch_size, shuffle=True)
 
         epochs_count.append(epoch)
@@ -175,7 +180,7 @@ def main(train_file,
 
         train_losses.append(epoch_loss)
         print("-> Training time: {:.4f}s, loss = {:.4f}, accuracy: {:.4f}%"
-              .format(epoch_time, epoch_loss, (epoch_accuracy*100)))
+              .format(epoch_time, epoch_loss, (epoch_accuracy * 100)))
 
         print("* Validation for epoch {}:".format(epoch))
         epoch_time, epoch_loss, epoch_accuracy = validate(model,
@@ -184,16 +189,16 @@ def main(train_file,
 
         valid_losses.append(epoch_loss)
         print("-> Valid. time: {:.4f}s, loss: {:.4f}, accuracy: {:.4f}%\n"
-              .format(epoch_time, epoch_loss, (epoch_accuracy*100)))
+              .format(epoch_time, epoch_loss, (epoch_accuracy * 100)))
 
         print("* Test for epoch {}:".format(epoch))
         epoch_time, epoch_loss, epoch_accuracy = validate(model,
                                                           test_dataloader,
                                                           criterion)
         print("-> Test. time: {:.4f}s, loss: {:.4f}, accuracy: {:.4f}%\n"
-              .format(epoch_time, epoch_loss, (epoch_accuracy*100)))
+              .format(epoch_time, epoch_loss, (epoch_accuracy * 100)))
 
-        sys.stdout.flush() #刷新输出
+        sys.stdout.flush()  # 刷新输出
         # Update the optimizer's learning rate with the scheduler.
         scheduler.step(epoch_accuracy)
 
@@ -253,7 +258,8 @@ if __name__ == "__main__":
     script_dir = script_dir + '/scripts/training'
 
     parser.add_argument("--checkpoint",
-                        default=None,#os.path.dirname(os.path.realpath(__file__)) + '/data/checkpoints/quora/bert/' +"esim_{}.pth.tar".format(2),
+                        default=None,
+                        # os.path.dirname(os.path.realpath(__file__)) + '/data/checkpoints/quora/bert/' +"esim_{}.pth.tar".format(2),
                         help="Path to a checkpoint file to resume training")
     args = parser.parse_args()
 
